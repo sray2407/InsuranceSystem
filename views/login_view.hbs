@@ -1,0 +1,181 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>CRUD Node.js and Mysql</title>
+  <link href="/assets/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+</head>
+
+<body style="padding-left: 50px; padding-right: 30px;">
+ <b><h1 id="main-head" onclick="window.location.reload();">Insurance Policy Management</h1></b>
+	<div style="margin-bottom: 30px;">
+		<button class="btn btn-primary" id="about-link">ABOUT US</button>
+		<button class="btn btn-primary" id="contact-link">CONTACT US</button>
+    <button class="btn btn-primary" data-toggle="modal" data-target="#EditModal">LOGIN</button>
+	</div>
+
+  <div class="container">
+     
+     
+        <!--<button class="btn btn-success" data-toggle="modal" data-target="#EditModal">Login</button>-->
+  </div>
+  <div id="display">
+		<div id="home-page">
+		<img src="/assets/MainPage.jpg" alt="Insurance Policy" width="100%" height="550px">
+    <br>
+    <br>
+		</div>
+	</div>
+ 
+  
+   <!-- Modal Add Product-->
+     
+ 
+     <!-- Modal Update Product-->
+   <form action="/login" method="post">
+       <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Edit Permission</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+             <!-- <div class="form-group">
+                Agent Id : <br>
+                  <input type="text" name="AgentId" class="form-control AgentId" placeholder="AgentId" required>
+ 
+              </div> -->
+
+              <div class="form-group">
+                Login Id : <br>
+                  <input type="text" name="loginId" class="form-control loginId:" value = "{{loginId}}" placeholder="" required>
+              </div>
+
+              <div class="form-group">
+                Account Type : <br>
+                  <!--<input type="text" name="GrantPermission" class="form-control GrantPermission:" placeholder="GrantPermission" required>-->
+                  <select id="accountType" name="accountType" class="form-control accountType:" >
+                    <option value="1">Admin</option>
+                    <option value="2">Agent</option>
+                    <option value="3">Policy Owner</option>
+                    <option value="4">Web Master</option>
+                    <option value="5">Claimant administrator</option>
+                  </select>
+              </div>
+
+              
+
+            </div>
+            <div class="modal-footer">
+              <input type="hidden" name="id" class="policyId">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Login</button>
+            </div>
+          </div>
+        </div>
+       </div>
+  </form>
+ 
+    
+
+    <div id="about-content" style="display: none;">
+		<p>Insurance Policy Management System connected the Agents and policy owners to manage their insurance policy details in a single platform.</p>
+		<h4>Our Mission:</h4>
+		<p>To provide peace of mind to our customers through sound insurance and exceptional service.
+		<h4>Our Core Values:</h4>
+		<ol>
+			<li>Excellence</li>
+			<li>Integrity</li>
+			<li>Responsibility</li>
+		</ol>
+		<h4>Our Vision:</h4>
+		<p>To be the company of choice for our associates, agents, and policyholders.
+		</p>
+		<h4>Statement of Corporate Ethical Values:</h4>
+		<p>It is our policy to conduct our affairs consistent with the highest moral, legal and ethical standards, as well as to comply with all laws governing our operations. We value our associates, agents and policyholders. It is associate performance and customer satisfaction that determine our success. We believe in the free enterprise system and pledge to treat our associates, agents, policyholders, claimants, suppliers and community with honesty, dignity, fairness and respect.</p>
+		<h4>Competing Fairly:</h4>
+		<p>We believe that leadership in our industry comes from providing insurance products and services of a quality and value that are superior to those of our competitors. Our intent is to compete fairly. It is against our policy and beliefs to act together with any competitor to fix prices or to agree about the nature, extent or means of competition in any market. Any actions that could be interpreted as price fixing or collusion are prohibited.</p>
+	</div>
+
+  <div id="contact-content" style="border: 2px solid Black; padding: 15px; display: none;">
+		<form id="form" action="#" method="post">
+			<div class="form-group">  
+				<label for="name">Name:</label>
+				<input type="text" value="" class="form-control" placeholder="Name" required /><br>
+			</div>
+			<label for="email">Email:</label>
+			<input type="email" value="" class="form-control" placeholder="Email" required /><br>
+			<label for="subject">Subject:</label>
+			<input type="email" value="" class="form-control" placeholder="Inquiry For Black Sheep Web Design" required /><br>
+			<label for="Message">Message:</label><br>
+			<textarea placeholder="Message"></textarea><br>
+			<input type="checkbox">
+			<label>Send Me A Copied Email.</label><br>
+			<input type="submit" onclick=sendmail() value="SEND EMAIL" class="btn btn-primary" />
+		</form>
+	</div>
+	<div id="login-content" style="display: none">
+		Login
+	</div>
+
+ <div style="bottom: 0; margin-left: 600px; position: fixed; text-align: center;">
+   <br>
+		<center>&copy; 2020 Insurance Policy Management | Singapore</center>
+	</div>
+
+<script src="/assets/js/jquery.js"></script>
+<script src="/assets/js/bootstrap.js"></script>
+<script>
+
+  function mainpage(){
+    document.getElementById('display').innerHTML=document.getElementById('home-page').innerHTML;
+  }
+		$('#main-head').click(function(){
+			document.getElementById('display').innerHTML=document.getElementById('home-page').innerHTML;
+		});
+		$('#about-link').click(function(){
+			
+		document.getElementById('display').innerHTML=document.getElementById('about-content').innerHTML;
+		});
+		$('#contact-link').click(function(){
+		document.getElementById('display').innerHTML=document.getElementById('contact-content').innerHTML;
+		});
+		$('#login-link').click(function(){
+			document.getElementById('display').innerHTML=document.getElementById('login-content').innerHTML;
+		});
+	
+
+    $(document).ready(function(){
+            //showing data to edit modal     
+             $('#mytable').on('click','.edit',function(){
+        //var loginId = $(this).data('loginId');
+       // var accountType = $(this).data('accountType');
+        
+        $('#EditModal').modal('show');
+       // $('.loginId').val(loginId);
+       // $('.accountType').val(accountType);
+      
+      });
+            //showing delete record modal
+            $('#mytable').on('click','.delete',function(){
+        var product_id = $(this).data('id');
+        $('#DeleteModal').modal('show');
+        $('.product_id2').val(product_id);
+      });
+        // Hiding un hiding model
+
+         $("input:radio").click(function() {
+    if($(this).val() == "AIA Singapore") {
+      $("#head").show();
+      $("#bod").hide();
+    } else {
+      $("#head").hide();
+      $("#bod").show();
+    }
+  });
+    });
+</script>
+</body>
+</html>

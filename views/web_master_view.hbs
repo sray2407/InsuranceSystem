@@ -1,0 +1,324 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>CRUD Node.js and Mysql</title>
+  <link href="/assets/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+</head>
+<body style="padding-left: 50px; padding-right: 30px;">
+ <b><h1 id="main-head" onclick="mainpage();">Insurance Policy Management</h1></b>
+	<div style="margin-bottom: 30px;">
+		<button class="btn btn-primary" id="about-link">ABOUT US</button>
+		<button class="btn btn-primary" id="contact-link">CONTACT US</button>
+    <button class="btn btn-primary" data-toggle="modal" data-target="#LoginModal">LOGIN</button>
+    <br>
+	</div>
+
+
+  <div id = "display" class="container">
+    <h2>Web Master Page</h2>
+     
+        <br>
+        <br>
+
+    <br>
+     <br>
+     
+        <button class="btn btn-success" data-toggle="modal" data-target="#myModalAdd">Generate Request</button>
+
+
+
+
+
+    <table class="table table-striped" id="mytable">
+      <thead>
+        <tr>
+          <th>Policy Id</th>
+          <th>Policy Amount</th>
+          <th>URL</th>
+         
+        </tr>
+      </thead>
+      <tbody>
+         {{#each results}}
+        <tr>
+          <td>{{ policyid }}</td>
+          <td>{{ policyamount  }}</td>
+          <td>{{ url }}</td>
+         
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+ 
+   <!-- Modal Add Product-->
+      <form action="/webMasterRequest" method="post">
+        <div class="modal fade" id="myModalAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+         <div class="modal-dialog" role="document">
+           <div class="modal-content">
+             <div class="modal-header">
+               <h5 class="modal-title" id="exampleModalLabel">Add New Product</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+               </button>
+             </div>
+             <div class="modal-body">
+               <div class="form-group">
+                    Policy Id :
+                   <input type="text" name="policyid" class="form-control" placeholder="Policy Id" required>
+               </div>
+
+               <div class="form-group">
+
+                    Policy Amount:
+                   <input type="text" name="policyamount" class="form-control" placeholder="Policy Amount" required>
+               </div>
+             </div>
+             <div class="modal-footer">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               <button type="submit" class="btn btn-primary">Save</button>
+             </div>
+           </div>
+         </div>
+        </div>
+     </form>
+      
+ 
+     <!-- Modal Update Product-->
+   <form action="/updateAgent" method="post">
+       <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Edit Permission</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+             <!-- <div class="form-group">
+                Agent Id : <br>
+                  <input type="text" name="AgentId" class="form-control AgentId" placeholder="AgentId" required>
+ 
+              </div> -->
+              <div class="form-group">
+                Name : <br>
+                  <input type="text" name="name" class="form-control name:" value = "" placeholder="" required>
+              </div>
+
+              <div class="form-group">
+                Company Name : <br>
+                  <input type="text" name="companyname" class="form-control companyname:" value = "" placeholder="" required>
+              </div>
+
+              <div class="form-group">
+                Address : <br>
+                  <input type="text" name="address" class="form-control address:" value = "" placeholder="" required>
+              </div>
+
+              <div class="form-group">
+                PhoneNo : <br>
+                  <input type="text" name="phoneno" class="form-control phoneno:" value = "" placeholder="" required>
+              </div>
+
+              
+              <div class="form-group">
+                Active : <br>
+                  <!--<input type="text" name="GrantPermission" class="form-control GrantPermission:" placeholder="GrantPermission" required>-->
+                  <select id="active" name="active" class="form-control active:" >
+                    <option value="1">YES</option>
+                    <option value="0">NO</option>
+                  </select>
+              </div>
+
+              
+
+            </div>
+            <div class="modal-footer">
+              <input type="hidden" name="id" class="AgentId">
+              
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+          </div>
+        </div>
+       </div>
+  </form>
+ 
+     <!-- Modal Delete Product-->
+      <form id="add-row-form" action="/deleteAgent" method="post">
+         <div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+               <div class="modal-content">
+                   <div class="modal-header">
+                                        <h5 class="modal-title" id="myModalLabel">Delete Agent</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                   </div>
+                   <div class="modal-body">
+                                                 <strong>Are you sure to delete the Agent?</strong>
+                   </div>
+                   <div class="modal-footer">
+                        <input type="hidden" name="agentid" class="form-control agentid" required>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Delete</button>
+                   </div>
+                    </div>
+            </div>
+         </div>
+     </form>
+
+     <!-- Modal Login-->
+   <form action="/login" method="post">
+       <div class="modal fade" id="LoginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Edit Permission</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+             <!-- <div class="form-group">
+                Agent Id : <br>
+                  <input type="text" name="AgentId" class="form-control AgentId" placeholder="AgentId" required>
+ 
+              </div> -->
+
+              <div class="form-group">
+                Login Id : <br>
+                  <input type="text" name="loginId" class="form-control loginId:" value = "{{loginId}}" placeholder="" required>
+              </div>
+
+              <div class="form-group">
+                Account Type : <br>
+                  <!--<input type="text" name="GrantPermission" class="form-control GrantPermission:" placeholder="GrantPermission" required>-->
+                  <select id="accountType" name="accountType" class="form-control accountType:" >
+                    <option value="1">Admin</option>
+                    <option value="2">Agent</option>
+                    <option value="3">Policy Owner</option>
+                    <option value="4">Web Master</option>
+                    <option value="5">Claimant administrator</option>
+                  </select>
+              </div>
+
+              
+
+            </div>
+            <div class="modal-footer">
+              <input type="hidden" name="id" class="policyId">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Login</button>
+            </div>
+          </div>
+        </div>
+       </div>
+  </form>
+ 
+
+	<div id="home-page" style="display: none;">
+		<img src="/assets/MainPage.jpg" alt="Insurance Policy" width="100%" height="550px">
+    <br>
+    <br>
+		</div>
+
+  <div id="about-content" style="display: none;">
+		<p>Insurance Policy Management System connected the Agents and policy owners to manage their insurance policy details in a single platform.</p>
+		<h4>Our Mission:</h4>
+		<p>To provide peace of mind to our customers through sound insurance and exceptional service.
+		<h4>Our Core Values:</h4>
+		<ol>
+			<li>Excellence</li>
+			<li>Integrity</li>
+			<li>Responsibility</li>
+		</ol>
+		<h4>Our Vision:</h4>
+		<p>To be the company of choice for our associates, agents, and policyholders.
+		</p>
+		<h4>Statement of Corporate Ethical Values:</h4>
+		<p>It is our policy to conduct our affairs consistent with the highest moral, legal and ethical standards, as well as to comply with all laws governing our operations. We value our associates, agents and policyholders. It is associate performance and customer satisfaction that determine our success. We believe in the free enterprise system and pledge to treat our associates, agents, policyholders, claimants, suppliers and community with honesty, dignity, fairness and respect.</p>
+		<h4>Competing Fairly:</h4>
+		<p>We believe that leadership in our industry comes from providing insurance products and services of a quality and value that are superior to those of our competitors. Our intent is to compete fairly. It is against our policy and beliefs to act together with any competitor to fix prices or to agree about the nature, extent or means of competition in any market. Any actions that could be interpreted as price fixing or collusion are prohibited.</p>
+	</div>
+
+  <div id="contact-content" style="border: 2px solid Black; padding: 15px; display: none;">
+		<form id="form" action="#" method="post">
+			<div class="form-group">  
+				<label for="name">Name:</label>
+				<input type="text" value="" class="form-control" placeholder="Name" required /><br>
+			</div>
+			<label for="email">Email:</label>
+			<input type="email" value="" class="form-control" placeholder="Email" required /><br>
+			<label for="subject">Subject:</label>
+			<input type="email" value="" class="form-control" placeholder="Inquiry For Black Sheep Web Design" required /><br>
+			<label for="Message">Message:</label><br>
+			<textarea placeholder="Message"></textarea><br>
+			<input type="checkbox">
+			<label>Send Me A Copied Email.</label><br>
+			<input type="submit" onclick=sendmail() value="SEND EMAIL" class="btn btn-primary" />
+		</form>
+	</div>
+  <div style="bottom: 0; margin-left: 600px; position: fixed; text-align: center;">
+   <br>
+		<center>&copy; 2020 Insurance Policy Management | Singapore</center>
+	</div>
+ 
+<script src="/assets/js/jquery.js"></script>
+<script src="/assets/js/bootstrap.js"></script>
+<script>
+function mainpage(){
+    document.getElementById('display').innerHTML=document.getElementById('home-page').innerHTML;
+  }
+  $('#main-head').click(function(){
+			document.getElementById('display').innerHTML=document.getElementById('home-page').innerHTML;
+		});
+		$('#about-link').click(function(){
+			
+		document.getElementById('display').innerHTML=document.getElementById('about-content').innerHTML;
+		});
+		$('#contact-link').click(function(){
+		document.getElementById('display').innerHTML=document.getElementById('contact-content').innerHTML;
+		});
+    $(document).ready(function(){
+            //showing data to edit modal     
+             $('#mytable').on('click','.edit',function(){
+        var AgentId = $(this).data('id');
+        var Address = $(this).data('address');
+        var Active = $(this).data('active');
+        var PhoneNo = $(this).data('phoneno');
+        var Name = $(this).data('name');
+        var CompanyName = $(this).data('companyname');
+        console.log("CompanyName 11::" + CompanyName);
+        $('#address').val(Address);
+         $(".modal-body #companyname").val( CompanyName );
+        $('#EditModal').modal('show');
+        //$('.address').val(Address);
+        $('.active').val(Active);
+        $('.phoneno').val(PhoneNo);
+        $('.agentid').val(AgentId);
+        $('.name').val(Name);
+        $('.companyname').val(CompanyName);
+        
+        $(".modal-body #companyname").val( CompanyName );
+      });
+            //showing delete record modal
+            $('#mytable').on('click','.delete',function(){
+        var agentid = $(this).data('id');
+        $('#DeleteModal').modal('show');
+        $('.agentid').val(agentid);
+      });
+        // Hiding un hiding model
+
+         $("input:radio").click(function() {
+    if($(this).val() == "AIA Singapore") {
+      $("#head").show();
+      $("#bod").hide();
+    } else {
+      $("#head").hide();
+      $("#bod").show();
+    }
+  });
+    });
+</script>
+</body>
+</html>
